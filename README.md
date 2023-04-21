@@ -7,10 +7,13 @@ A Bottom Navigation bar that hides when scrolling down or appears when scrolling
 
 ### Install in pubspec.yaml
 
+```yaml
+
+
 hidding_bottom_navigation_bar:
     git:
       url: https://github.com/raul94a/hidding_bottom_navigation_bar
-      
+ ```    
 ### import
 
 import 'package:hidding_bottom_navigation_bar/hidding_bottom_navigation_bar.dart';
