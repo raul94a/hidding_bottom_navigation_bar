@@ -15,9 +15,11 @@ hidding_bottom_navigation_bar:
       url: https://github.com/raul94a/hidding_bottom_navigation_bar
  ```    
 ### import
+```dart
 
 import 'package:hidding_bottom_navigation_bar/hidding_bottom_navigation_bar.dart';
 
+```
 
 ## Usage
 
