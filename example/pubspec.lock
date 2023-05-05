@@ -75,6 +75,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  hidding_bottom_navigation_bar:
+    dependency: "direct main"
+    description:
+      name: hidding_bottom_navigation_bar
+      sha256: c1526060de53659a34a1deb92d10d32dc82cdde6a3a3c65ab16f24536206d787
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   js:
     dependency: transitive
     description:
@@ -186,3 +194,4 @@ packages:
     version: "2.1.4"
 sdks:
   dart: ">=2.19.2 <3.0.0"
+  flutter: ">=1.17.0"

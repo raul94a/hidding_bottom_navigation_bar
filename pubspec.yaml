@@ -1,13 +1,14 @@
 name: hidding_bottom_navigation_bar
-description: A new Flutter package project.
-version: 0.0.1
-homepage:
+description: A light weight solution for managing a hidding bottom navigation bar
+version: 1.0.0
+homepage: https://github.com/raul94a/hidding_bottom_navigation_bar
 
 environment:
   sdk: '>=2.19.2 <3.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
+  vector_math: ^2.1.4 
   flutter:
     sdk: flutter
 
