@@ -1,39 +1,86 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+A Bottom Navigation bar that hides when scrolling down or appears when scrolling up.
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+### Install in pubspec.yaml
+
+```yaml
+
+
+hidding_bottom_navigation_bar:
+    git:
+      url: https://github.com/raul94a/hidding_bottom_navigation_bar
+ ```    
+### import
+```dart
+
+import 'package:hidding_bottom_navigation_bar/hidding_bottom_navigation_bar.dart';
+
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+Just use HiddingBottomNavigationBar in the Scaffold bottomNavigationBar parameter. You need to attatch a ScrollController both the HiddingNavigationBar and the scrollable Widget (SingleChildScrollView, ListView, etc). 
 
 ```dart
-const like = 'sample';
+
+class HiddingBottomNavBarWidgetTest extends StatefulWidget {
+  const HiddingBottomNavBarWidgetTest({super.key});
+
+  @override
+  State<HiddingBottomNavBarWidgetTest> createState() =>
+      _HiddingBottomNavBarWidgetTestState();
+}
+
+class _HiddingBottomNavBarWidgetTestState
+    extends State<HiddingBottomNavBarWidgetTest> {
+  final controller = ScrollController();
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      appBar: null,
+      body: SizedBox(
+        height: size.height * 2,
+        child: SingleChildScrollView(
+          controller: controller,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                  width: size.width,
+                  height: size.height,
+                  child: const Center(child: Text('Test hidding bottom navigation bar')))
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: HiddingBottomNavigationBar(
+          type: FlexibleBottomNavigationBarType.fixed,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.calendar_today), label: 'Tasks'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), label: 'Settings'),
+          ],
+          onTap: (index) {},
+          scrollController: controller),
+    );
+  }
+}
 ```
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+
