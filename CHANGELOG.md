@@ -1,4 +1,4 @@
-## 1.0.1
+## 1.0.5
 
 * Fix on appear and on hide methods
 

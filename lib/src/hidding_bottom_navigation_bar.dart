@@ -70,7 +70,7 @@ class _HiddingBottomNavigationBarState extends State<HiddingBottomNavigationBar>
       vsync: this,
       duration: const Duration(milliseconds: 1000),
       reverseDuration: const Duration(milliseconds: 1000));
-
+  bool navBarIsHidden = false;
   @override
   void dispose() {
     _heightController.dispose();
@@ -133,15 +133,22 @@ class _HiddingBottomNavigationBarState extends State<HiddingBottomNavigationBar>
         ScrollDirection.forward) {
       if (_sliderController.isCompleted) {
         _sliderController.reverse();
-        _heightController.reverse();
-        widget.onAppear != null ? widget.onAppear!() : () => {};
+        _heightController.reverse().whenComplete(() {
+          navBarIsHidden = false;
+          widget.onAppear != null ? widget.onAppear!() : () => {};
+        });
       }
     } else if (widget.scrollController.position.userScrollDirection ==
         ScrollDirection.reverse) {
       if ((_sliderController.isCompleted || !_sliderController.isAnimating)) {
         _sliderController.forward();
-        _heightController.forward();
-        widget.onHide != null ? widget.onHide!() : () => {};
+        _heightController.forward().whenComplete(() {
+          if (navBarIsHidden) {
+            return;
+          }
+          navBarIsHidden = true;
+          widget.onHide != null ? widget.onHide!() : () => {};
+        });
       }
     }
     return;

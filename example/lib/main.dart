@@ -7,70 +7,114 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: HiddingBottomNavBarWidgetTest());
+        home: const HiddingBottomNavBarExample());
   }
 }
 
-class HiddingBottomNavBarWidgetTest extends StatefulWidget {
-  const HiddingBottomNavBarWidgetTest({super.key});
+class HiddingBottomNavBarExample extends StatefulWidget {
+  const HiddingBottomNavBarExample({super.key});
 
   @override
-  State<HiddingBottomNavBarWidgetTest> createState() =>
-      _HiddingBottomNavBarWidgetTestState();
+  State<HiddingBottomNavBarExample> createState() =>
+      _HiddingBottomNavBarExampleState();
 }
 
-class _HiddingBottomNavBarWidgetTestState
-    extends State<HiddingBottomNavBarWidgetTest> {
-  final controller = ScrollController();
+class _HiddingBottomNavBarExampleState
+    extends State<HiddingBottomNavBarExample> {
+  //1. Declaramos el ScrollController
+  final scrollController = ScrollController();
+  late final List<Widget> _pages = [
+    _Home(scrollController: scrollController),
+    const _Tasks(),
+    const _Settings()
+  ];
+  //   Para actualizar la página en la que estamos al pulsar sobre los
+  //   elementos del HiddingBottomNavigationBar.
+  int index = 0;
+  void setIndex(int position) => setState(() => index = position);
+
   @override
   void dispose() {
-    controller.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: null,
-      body: ListView.separated(
-        controller: controller,
-        separatorBuilder: (context, index) => const Divider(color: Colors.grey,),
-        itemCount: 150,
-        itemBuilder: (ctx,i){
-          return SizedBox(height: 50, child: Text('SOY EL NUMERO ${i + 1}'),)
-       ; }),
+      body: _pages[index],
       bottomNavigationBar: HiddingBottomNavigationBar(
-          type: FlexibleBottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_today), label: 'Tasks'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: 'Settings'),
-          ],
-          onTap: (index) {},
-          onAppear: () => print('ESTOY APARECIENDO'),
-          onHide: () => print('ESTOY DESAPARECIENDO'),
-          scrollController: controller),
+        //3. Le pasamos el scrollController, de igual manera que hemos hecho con el
+        //   ListView. Con esto tendremos el Scrolling que se realice dentro del ListView
+        //   conectado con nuestro HiddingBottomNavigationBar... y vualá!
+        scrollController: scrollController,
+        height: 70,
+        type: FlexibleBottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today), label: 'Tasks'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: 'Settings'),
+        ],
+        onTap: setIndex,
+        currentIndex: index,
+        onAppear: () => print('ESTOY APARECIENDO'),
+        onHide: () => print('ESTOY DESAPARECIENDO'),
+      ),
     );
+  }
+}
+
+class _Tasks extends StatelessWidget {
+  const _Tasks({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text('Tasks'),
+    );
+  }
+}
+
+class _Settings extends StatelessWidget {
+  const _Settings({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text('settings'),
+    );
+  }
+}
+
+class _Home extends StatelessWidget {
+  const _Home({
+    super.key,
+    required this.scrollController,
+  });
+
+  final ScrollController scrollController;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+        //2. Le pasamos el scrollController al ListView. Esto es esencial!
+        controller: scrollController,
+        separatorBuilder: (context, index) => const Divider(color: Colors.grey),
+        itemCount: 150,
+        itemBuilder: (ctx, i) {
+          return SizedBox(
+            height: 50,
+            child: Text('Elemento número ${i + 1} de Home'),
+          );
+        });
   }
 }
