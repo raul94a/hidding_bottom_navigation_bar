@@ -79,10 +79,10 @@ packages:
     dependency: "direct main"
     description:
       name: hidding_bottom_navigation_bar
-      sha256: c1526060de53659a34a1deb92d10d32dc82cdde6a3a3c65ab16f24536206d787
+      sha256: "9eb57af90c5561a651ecf1399cd0d742b0f03f395823bfa3e550773e19e10cff"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.1"
+    version: "1.0.1"
   js:
     dependency: transitive
     description:

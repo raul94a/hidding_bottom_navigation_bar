@@ -134,14 +134,14 @@ class _HiddingBottomNavigationBarState extends State<HiddingBottomNavigationBar>
       if (_sliderController.isCompleted) {
         _sliderController.reverse();
         _heightController.reverse();
-        widget.onAppear == null ? widget.onAppear!() : () => {};
+        widget.onAppear != null ? widget.onAppear!() : () => {};
       }
     } else if (widget.scrollController.position.userScrollDirection ==
         ScrollDirection.reverse) {
       if ((_sliderController.isCompleted || !_sliderController.isAnimating)) {
         _sliderController.forward();
         _heightController.forward();
-        widget.onHide == null ? widget.onHide!() : () => {};
+        widget.onHide != null ? widget.onHide!() : () => {};
       }
     }
     return;
