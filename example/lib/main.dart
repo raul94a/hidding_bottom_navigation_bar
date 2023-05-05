@@ -51,6 +51,11 @@ class _HiddingBottomNavBarExampleState
     return Scaffold(
       body: _pages[index],
       bottomNavigationBar: HiddingBottomNavigationBar(
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.white,
+        selectedLabelStyle: TextStyle(color: Colors.blue),
+        unselectedLabelStyle: TextStyle(color: Colors.white),
+        backgroundColor: Color.fromARGB(255, 61, 59, 59),
         //3. Le pasamos el scrollController, de igual manera que hemos hecho con el
         //   ListView. Con esto tendremos el Scrolling que se realice dentro del ListView
         //   conectado con nuestro HiddingBottomNavigationBar... y vualá!
