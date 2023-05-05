@@ -1,37 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hidding_bottom_navigation_bar/src/flexible_bottom_navigation_bar.dart';
-/**
- * 
- *  Key? key,
 
-
-
-  double? elevation,
-  FlexibleBottomNavigationBarType? type,
-  Color? fixedColor,
-  Color? backgroundColor,
-  double iconSize = 24.0,
-  Color? selectedItemColor,
-  Color? unselectedItemColor,
-  IconThemeData? selectedIconTheme,
-  IconThemeData? unselectedIconTheme,
-  double selectedFontSize = 14.0,
-  double unselectedFontSize = 12.0,
-  TextStyle? selectedLabelStyle,
-  TextStyle? unselectedLabelStyle,
-  bool? showSelectedLabels,
-  bool? showUnselectedLabels,
-  MouseCursor? mouseCursor,
-  bool? enableFeedback,
-  BottomNavigationBarLandscapeLayout? landscapeLayout,
-  bool useLegacyColorScheme = true,
- */
 class HiddingBottomNavigationBar extends StatefulWidget {
   const HiddingBottomNavigationBar(
       {super.key,
       this.currentIndex = 0,
-    
       required this.items,
       required this.onTap,
       this.elevation,
@@ -50,24 +24,30 @@ class HiddingBottomNavigationBar extends StatefulWidget {
       this.mouseCursor,
       this.selectedItemColor,
       this.unselectedItemColor,
+      this.onAppear,
+      this.onHide,
       this.landscapeLayout,
       this.type = FlexibleBottomNavigationBarType.fixed,
       this.duration = const Duration(milliseconds: 550),
       this.reverseDuration = const Duration(milliseconds: 550),
       required this.scrollController,
       this.height = 120.0});
-      final int currentIndex;
+  final int currentIndex;
   final List<BottomNavigationBarItem> items;
   final ScrollController scrollController;
-  final double height,selectedFontSize,unselectedFontSize,iconSize;
+  final double height, selectedFontSize, unselectedFontSize, iconSize;
   final double? elevation;
-  final Color? fixedColor, backgroundColor,selectedItemColor,unselectedItemColor;
-  final bool? showSelectedLabels,showUnselectedLabels, enableFeedback;
+  final Color? fixedColor,
+      backgroundColor,
+      selectedItemColor,
+      unselectedItemColor;
+  final bool? showSelectedLabels, showUnselectedLabels, enableFeedback;
   final IconThemeData? selectedIconTheme, unselectedIconTheme;
   final BottomNavigationBarLandscapeLayout? landscapeLayout;
   final MouseCursor? mouseCursor;
   final TextStyle? selectedLabelStyle, unselectedLabelStyle;
   final Function(int)? onTap;
+  final Function()? onHide, onAppear;
   final FlexibleBottomNavigationBarType type;
   final Duration duration, reverseDuration;
   @override
@@ -132,7 +112,6 @@ class _HiddingBottomNavigationBarState extends State<HiddingBottomNavigationBar>
                   showUnselectedLabels: widget.showUnselectedLabels,
                   currentIndex: widget.currentIndex,
                   fixedColor: widget.fixedColor,
-                
                   backgroundColor: widget.backgroundColor,
                   onTap: widget.onTap,
                   items: widget.items,
@@ -155,12 +134,14 @@ class _HiddingBottomNavigationBarState extends State<HiddingBottomNavigationBar>
       if (_sliderController.isCompleted) {
         _sliderController.reverse();
         _heightController.reverse();
+        widget.onAppear == null ? widget.onAppear!() : () => {};
       }
     } else if (widget.scrollController.position.userScrollDirection ==
         ScrollDirection.reverse) {
       if ((_sliderController.isCompleted || !_sliderController.isAnimating)) {
         _sliderController.forward();
         _heightController.forward();
+        widget.onHide == null ? widget.onHide!() : () => {};
       }
     }
     return;
